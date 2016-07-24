@@ -41,13 +41,14 @@ module ZooqleSearch
 
       crawled_links.each do |link|
         filename = link.at('a').text
-        next if filename.strip.empty?
+        seeders_leechers = link.at('div[title^="Seeders:"]')
+        next if filename.strip.empty? || seeders_leechers.nil?
 
         size = link.at('.progress-bar').text
         magnet = link.at('a[title="Magnet link"]')['href']
         download_url = BASE_URL + link.at('a[title="Generate .torrent"]')['href']
 
-        seeders_leechers = link.at('div[title^="Seeders:"]')['title']
+        seeders_leechers = seeders_leechers['title']
         seeders = seeders_leechers[/Seeders: (?<seeders>[\d,]+) \| Leechers: (?<leechers>[\d,]+)/, :seeders]
         leechers = seeders_leechers[/Seeders: (?<seeders>[\d,]+) \| Leechers: (?<leechers>[\d,]+)/, :leechers]
 
