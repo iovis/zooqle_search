@@ -40,9 +40,10 @@ module ZooqleSearch
       crawled_links = page.css('.table-torrents tr')
 
       crawled_links.each do |link|
-        filename = link.at('a').text
+        filename_node = link.at('a')
+        filename = filename_node.text if filename_node
         seeders_leechers = link.at('div[title^="Seeders:"]')
-        next if filename.strip.empty? || seeders_leechers.nil?
+        next if filename_node.nil? || filename.strip.empty? || seeders_leechers.nil?
 
         size = link.at('.progress-bar').text
         magnet = link.at('a[title="Magnet link"]')['href']
