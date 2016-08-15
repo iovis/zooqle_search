@@ -29,6 +29,8 @@ module ZooqleSearch
     end
 
     def download(path = './')
+      raise 'No download url provided' unless @download_url
+
       response = HTTParty.get(@download_url)
 
       raise 'Wrong content-type. Aborting.' unless response.headers['content-type'].include? 'application/x-bittorrent'

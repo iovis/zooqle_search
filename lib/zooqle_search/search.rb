@@ -47,7 +47,7 @@ module ZooqleSearch
 
         size = link.at('.progress-bar').text
         magnet = link.at('a[title="Magnet link"]')['href']
-        download_url = BASE_URL + link.at('a[title="Generate .torrent"]')['href']
+        download_url = BASE_URL + link.at('a[title="Generate .torrent"]')['href'] if link.at('a[title="Generate .torrent"]')
 
         seeders_leechers = seeders_leechers['title']
         seeders = seeders_leechers[/Seeders: (?<seeders>[\d,]+) \| Leechers: (?<leechers>[\d,]+)/, :seeders]
